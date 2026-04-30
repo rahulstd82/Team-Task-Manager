@@ -48,7 +48,7 @@ A full-stack web application for team collaboration — create projects, manage 
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/team-task-manager.git
+git clone https://github.com/rahulstd82/team-task-manager.git
 cd team-task-manager
 ```
 
