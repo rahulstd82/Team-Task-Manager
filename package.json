@@ -4,12 +4,14 @@
   "description": "Team Task Manager API",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
+    "build": "tsc && npm run build:client",
+    "build:client": "cd client && npm install && npm run build",
+    "start": "node -r dotenv/config dist/server.js",
     "dev": "ts-node src/server.ts",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
-    "migrate": "node -r ts-node/register src/db/migrate.ts"
+    "migrate": "node -r ts-node/register src/db/migrate.ts",
+    "migrate:prod": "node -r dotenv/config dist/db/migrate.js"
   },
   "keywords": [],
   "author": "",

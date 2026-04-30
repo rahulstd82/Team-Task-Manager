@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -36,5 +37,15 @@ app.use('/dashboard', dashboardRoutes);
 // Global error handler — must be registered after all routes
 import { errorHandler } from './middleware/errorHandler';
 app.use(errorHandler);
+
+// Serve React frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const clientBuild = path.join(__dirname, '..', 'client', 'dist');
+  app.use(express.static(clientBuild));
+  // All non-API routes return the React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuild, 'index.html'));
+  });
+}
 
 export default app;
