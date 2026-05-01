@@ -1,5 +1,8 @@
 -- Create tasks table
-CREATE TYPE task_status AS ENUM ('todo', 'in_progress', 'done');
+DO $$ BEGIN
+  CREATE TYPE task_status AS ENUM ('todo', 'in_progress', 'done');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 CREATE TABLE IF NOT EXISTS tasks (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -13,7 +16,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_tasks_project_id ON tasks(project_id);
-CREATE INDEX idx_tasks_assignee_id ON tasks(assignee_id);
-CREATE INDEX idx_tasks_status ON tasks(status);
-CREATE INDEX idx_tasks_due_date ON tasks(due_date);
+CREATE INDEX IF NOT EXISTS idx_tasks_project_id ON tasks(project_id);
+CREATE INDEX IF NOT EXISTS idx_tasks_assignee_id ON tasks(assignee_id);
+CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
+CREATE INDEX IF NOT EXISTS idx_tasks_due_date ON tasks(due_date);
