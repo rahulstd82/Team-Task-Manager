@@ -4,7 +4,7 @@
   "description": "Team Task Manager API",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && npm run build:client",
+    "build": "tsc && cp -r src/db/migrations dist/db/migrations && npm run build:client",
     "build:client": "cd client && npm install && npm run build",
     "start": "node -r dotenv/config dist/db/migrate.js && node -r dotenv/config dist/server.js",
     "dev": "ts-node src/server.ts",
